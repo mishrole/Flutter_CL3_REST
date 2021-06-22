@@ -1,0 +1,15 @@
+{
+    "nameApp": "CL3 - DAM II",
+    "routes": [
+        {
+            "route": "list",
+            "icon": "list",
+            "name": "Servicios"
+        },
+        {
+            "route": "create",
+            "icon": "add",
+            "name": "Nuevo Servicio"
+        }
+    ]
+}
