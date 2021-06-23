@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cl3_t6nn_rodriguez_leon_mitchell/src/pages/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cl3_t6nn_rodriguez_leon_mitchell/src/models/service_object.dart';
 import 'package:http/http.dart' as http;
@@ -96,7 +97,7 @@ class _ListServices extends State<ListPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        // Nuevo registro
+                        _createService();
                       },
                       child: Text('Nuevo'),
                     ),
@@ -168,5 +169,12 @@ class _ListServices extends State<ListPage> {
         _orden = value;
       }),
     );
+  }
+
+  void _createService() async {
+    Navigator.of(context).
+    push(MaterialPageRoute(builder: (BuildContext pContext) {
+      return new RegisterPage();
+    }));
   }
 }

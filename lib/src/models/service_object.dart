@@ -28,17 +28,17 @@ class ServiceObject {
   }
 
   ServiceObject(
-      { required this.CodigoServicio,
-      required this.NombreCliente,
-      required this.NumeroOrdenServicio,
-      required this.FechaProgramada,
-      required this.Linea,
-      required this.Estado,
-      required this.Observaciones,
-      required this.Eliminado,
-      required this.CodigoError,
-      required this.DescripcionError,
-      required this.MensajeError});
+      { this.CodigoServicio,
+      this.NombreCliente,
+      this.NumeroOrdenServicio,
+      this.FechaProgramada,
+      this.Linea,
+      this.Estado,
+      this.Observaciones,
+      this.Eliminado,
+      this.CodigoError,
+      this.DescripcionError,
+      this.MensajeError});
 
   factory ServiceObject.fromJson(Map<String, dynamic> json) {
     return ServiceObject(

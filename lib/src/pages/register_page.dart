@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'package:cl3_t6nn_rodriguez_leon_mitchell/src/models/service_object.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async' show Future;
 
 class RegisterPage extends StatelessWidget {
 
@@ -17,8 +22,14 @@ class RegisterPage extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ServiceFormWidget extends StatefulWidget {
-  const ServiceFormWidget({Key? key}) : super(key: key);
+  ServiceFormWidget({Key? key}) : super(key: key);
+
+  ServiceObject oService = new ServiceObject();
+  String urlGeneral = "http://wscibertec2021.somee.com/Servicio";
+  String urlCreate = "/RegistraModifica?Accion=";
+  String message = "";
 
   @override
   State<StatefulWidget> createState() => _ServiceForm();
@@ -26,6 +37,12 @@ class ServiceFormWidget extends StatefulWidget {
 }
 
 class _ServiceForm extends State<ServiceFormWidget> {
+
+  @override
+  void initState() {
+    super.initState();
+    widget.oService.initialize();
+  }
 
   String _nombre = '';
   String _orden = '';
@@ -57,7 +74,7 @@ class _ServiceForm extends State<ServiceFormWidget> {
               child: ElevatedButton(
                 onPressed: () {
                   if(_formKey.currentState!.validate()) {
-                    // Procesar datos
+                    _saveNewService();
                   }
                 },
                 child: Text('Grabar'),
@@ -195,6 +212,27 @@ class _ServiceForm extends State<ServiceFormWidget> {
         _inputFieldDateController.text = _fecha;
       });
     }
+  }
+
+  Future<String> _saveNewService() async {
+    String accion = "N";
+
+    String urlParams = "${widget.urlGeneral}${widget.urlCreate}$accion&NombreCliente=$_nombre&NumeroOrdenServicio=$_orden&FechaProgramada=$_fecha&Linea=$_linea&Estado=$_estado&Observaciones=$_observaciones";
+
+    var response = await http.get(Uri.parse(urlParams));
+    var data = response.body;
+
+    setState(() {
+      widget.oService = ServiceObject.fromJson(json.decode(data));
+
+      if(widget.oService.CodigoServicio! > 0) {
+        widget.message = "Grabado correctamente";
+      }
+
+      print(widget.oService);
+    });
+
+    return "Registrando";
   }
 }
 
