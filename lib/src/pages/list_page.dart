@@ -15,6 +15,9 @@ class ListPage extends StatefulWidget {
   int codServiceSelected = 0;
   String urlGeneral = "http://wscibertec2021.somee.com/Servicio";
   String urlList = "/Listar?";
+  String message = "";
+
+  ServiceObject oService = new ServiceObject();
 
   String jsonServices = '[{"CodigoServicio": 0,"NombreCliente": "","NumeroOrdenServicio": "","FechaProgramada": "","Linea": "","Estado": "","Observaciones": "","Eliminado": false,"CodigoError": 0,"DescripcionError": "","MensajeError": null}]';
 
@@ -36,10 +39,10 @@ class _ListServices extends State<ListPage> {
   String _orden = "";
 
   Future<String> _getServices() async {
-    String urlListServices = widget.urlGeneral + widget.urlList +
+    String urlParams = widget.urlGeneral + widget.urlList +
      "NombreCliente=" + _nombre + "&NumeroOrdenServicio=" + _orden;
     
-    var response = await http.get(Uri.parse(urlListServices));
+    var response = await http.get(Uri.parse(urlParams));
     var data = response.body;
 
     var oListServicesTemp = List<ServiceObject>.from(json.decode(data).map((service) => ServiceObject.fromJson(service)));
@@ -113,6 +116,10 @@ class _ListServices extends State<ListPage> {
                 paginationRowCount: 10,
                 onRowSelect: (index, map) {
                   widget.codServiceSelected = int.parse(map["CodigoServicio"].toString());
+                  widget.oService.CodigoServicio = map["CodigoServicio"];
+                  widget.oService.NombreCliente = map["NombreCliente"];
+                  widget.oService.NumeroOrdenServicio = map["NumeroOrdenServicio"];
+                  _showAlert(context);
                 },
               ),
               SizedBox(
@@ -176,5 +183,28 @@ class _ListServices extends State<ListPage> {
     push(MaterialPageRoute(builder: (BuildContext pContext) {
       return new RegisterPage();
     }));
+  }
+
+  
+  void _showAlert(BuildContext context) {
+    showDialog(context: context, builder: (context) {
+      return Center(
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text(widget.message),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('Código de Servicio: ' + widget.oService.CodigoServicio.toString()),
+              Text('Nombre de Cliente: ' + widget.oService.NombreCliente.toString()),
+              Text('Número de Orden: ' + widget.oService.NumeroOrdenServicio.toString())
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: Text('Aceptar')),
+          ],
+        ),
+      );
+    });
   }
 }
