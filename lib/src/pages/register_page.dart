@@ -225,14 +225,35 @@ class _ServiceForm extends State<ServiceFormWidget> {
     setState(() {
       widget.oService = ServiceObject.fromJson(json.decode(data));
 
-      if(widget.oService.CodigoServicio! > 0) {
+      if(widget.oService.CodigoServicio != 0) {
         widget.message = "Grabado correctamente";
+        _showAlert(context);
+      } else {
+        widget.message = "Ocurrió un error al guardar";
+        _showAlert(context);
       }
-
-      print(widget.oService);
     });
 
     return "Registrando";
+  }
+
+    void _showAlert(BuildContext context) {
+    showDialog(context: context, builder: (context) {
+      return Center(
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text(widget.message),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(onPressed: () => Navigator.of(context).pop(), child: Text('Aceptar')),
+          ],
+        ),
+      );
+    });
   }
 }
 
