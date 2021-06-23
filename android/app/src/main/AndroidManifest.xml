@@ -2,7 +2,9 @@
     package="com.example.cl3_t6nn_rodriguez_leon_mitchell">
    <application
         android:label="cl3_t6nn_rodriguez_leon_mitchell"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+        >
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

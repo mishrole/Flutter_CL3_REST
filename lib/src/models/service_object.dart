@@ -1,17 +1,17 @@
 import 'dart:convert';
 
 class ServiceObject {
-  int CodigoServicio;
-  String NombreCliente;
-  String NumeroOrdenServicio;
-  String FechaProgramada;
-  String Linea;
-  String Estado;
-  String Observaciones;
-  bool Eliminado;
-  int CodigoError;
-  String DescripcionError;
-  String MensajeError;
+  int? CodigoServicio;
+  String? NombreCliente;
+  String? NumeroOrdenServicio;
+  String? FechaProgramada;
+  String? Linea;
+  String? Estado;
+  String? Observaciones;
+  bool? Eliminado;
+  int? CodigoError;
+  String? DescripcionError;
+  String? MensajeError;
 
   void initialize() {
     this.CodigoServicio = 0;
@@ -28,7 +28,7 @@ class ServiceObject {
   }
 
   ServiceObject(
-      {required this.CodigoServicio,
+      { required this.CodigoServicio,
       required this.NombreCliente,
       required this.NumeroOrdenServicio,
       required this.FechaProgramada,
